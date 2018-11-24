@@ -1,8 +1,7 @@
 import React from "react";
 import Pet from "./Pet";
 import pf from "petfinder-client";
-import SearchBox from "./SearchBox";
-import { Consumer } from "./SearchContext";
+// import SearchBox from "./SearchBox";
 
 const petfinder = pf({
     key: process.env.API_KEY,
@@ -19,16 +18,17 @@ class Results extends React.Component {
     }
 
     componentDidMount() {
-        this.search();  
+        this.search();
     }
 
     search = () => {
+        console.log(this.props.location);
         petfinder.pet
             .find({
                 output: "full",
-                location: this.props.searchParams.location,
-                animal: this.props.searchParams.animal,
-                breed: this.props.searchParams.breed
+                location: this.props.location,
+                animal: this.props.animal,
+                breed: this.props.breed
             })
             .then(data => {
                 let pets;
@@ -47,12 +47,34 @@ class Results extends React.Component {
                     pets
                 });
             });
-    }
+    };
 
     render() {
+        const {
+            animal,
+            location,
+            breeds,
+            breed,
+            handleAnimalChange,
+            handleBreedChange,
+            handleLocationChange
+        } = this.props;
+
+        console.log(location);
+
         return (
             <div className="search">
-                <SearchBox search={this.search} />
+                {/* <SearchBox
+                    search={this.search}
+                    path="/"
+                    animal={animal}
+                    location={location}
+                    breed={breed}
+                    breeds={breeds}
+                    handleAnimalChange={handleAnimalChange}
+                    handleBreedChange={handleBreedChange}
+                    handleLocationChange={handleLocationChange}
+                /> */}
                 {this.state.pets.map(elem => {
                     let breed;
                     if (Array.isArray(elem.breeds.breed)) {
@@ -79,10 +101,4 @@ class Results extends React.Component {
     }
 }
 
-export default function ResultsWithContext(props) {
-    return (
-        <Consumer>
-            {context => <Results {...props} searchParams={context} />}
-        </Consumer>
-    );
-}
+export default Results;

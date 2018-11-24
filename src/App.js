@@ -3,10 +3,8 @@ import React from "react";
 import { render } from "react-dom";
 import Results from "./Results";
 import { Router, Link } from "@reach/router";
-import Details from "./Details";
-import SearchParams from "./SearchParams";
-import { Provider } from "./SearchContext";
-import Service from "./Service";
+// import Details from "./Details";
+// import SearchParams from "./SearchParams";
 
 const petfinder = pf({
     key: process.env.API_KEY,
@@ -25,8 +23,7 @@ class App extends React.Component {
             handleAnimalChange: this.handleAnimalChange,
             handleBreedChange: this.handleBreedChange,
             handleLocationChange: this.handleLocationChange,
-            getBreeds: this.getBreeds,
-            service: new Service()
+            getBreeds: this.getBreeds
         };
     }
 
@@ -77,23 +74,38 @@ class App extends React.Component {
     }
 
     render() {
+        const {
+            animal,
+            location,
+            breeds,
+            breed,
+            handleAnimalChange,
+            handleBreedChange,
+            handleLocationChange
+        } = this.state;
         return (
             <div>
                 <header>
                     <Link to="/">Adopt Me!</Link>
-                    <Link to="search-params">
-                        <span aria-label="search">
-                            SEARCH!
-                        </span>
-                    </Link>
+                    {/* <Link to="search-params">
+                        <span aria-label="search">SEARCH!</span>
+                    </Link> */}
                 </header>
-                <Provider value={this.state}>
-                    <Router>
-                        <Results path="/" />
-                        <Details path="/details/:id" />
-                        <SearchParams path="/search-params" />
-                    </Router>
-                </Provider>
+
+                <Router>
+                    <Results
+                        path="/"
+                        animal={animal}
+                        location={location}
+                        breed={breed}
+                        breeds={breeds}
+                        handleAnimalChange={handleAnimalChange}
+                        handleBreedChange={handleBreedChange}
+                        handleLocationChange={handleLocationChange}
+                    />
+                    {/* <Details path="/details/:id" />
+                    <SearchParams path="/search-params" /> */}
+                </Router>
             </div>
         );
     }
