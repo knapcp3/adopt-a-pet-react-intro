@@ -3,8 +3,8 @@ import React from "react";
 import { render } from "react-dom";
 import Results from "./Results";
 import { Router, Link } from "@reach/router";
-// import Details from "./Details";
-// import SearchParams from "./SearchParams";
+import Details from "./Details";
+import SearchParams from "./SearchParams";
 
 const petfinder = pf({
     key: process.env.API_KEY,
@@ -16,20 +16,20 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            location: "Seattle, WA",
+            petLocation: "Seattle, WA",
             animal: "",
             breed: "",
             breeds: [],
             handleAnimalChange: this.handleAnimalChange,
             handleBreedChange: this.handleBreedChange,
-            handleLocationChange: this.handleLocationChange,
+            handlePetLocationChange: this.handlePetLocationChange,
             getBreeds: this.getBreeds
         };
     }
 
-    handleLocationChange = event => {
+    handlePetLocationChange = event => {
         this.setState({
-            location: event.target.value
+            petLocation: event.target.value
         });
     };
 
@@ -76,35 +76,35 @@ class App extends React.Component {
     render() {
         const {
             animal,
-            location,
+            petLocation,
             breeds,
             breed,
             handleAnimalChange,
             handleBreedChange,
-            handleLocationChange
+            handlePetLocationChange
         } = this.state;
         return (
             <div>
                 <header>
                     <Link to="/">Adopt Me!</Link>
-                    {/* <Link to="search-params">
+                    <Link to="search-params">
                         <span aria-label="search">SEARCH!</span>
-                    </Link> */}
+                    </Link>
                 </header>
 
                 <Router>
                     <Results
                         path="/"
                         animal={animal}
-                        location={location}
+                        petLocation={petLocation}
                         breed={breed}
                         breeds={breeds}
                         handleAnimalChange={handleAnimalChange}
                         handleBreedChange={handleBreedChange}
-                        handleLocationChange={handleLocationChange}
+                        handlePetLocationChange={handlePetLocationChange}
                     />
-                    {/* <Details path="/details/:id" />
-                    <SearchParams path="/search-params" /> */}
+                    <Details path="/details/:id" />
+                    <SearchParams path="/search-params" />
                 </Router>
             </div>
         );

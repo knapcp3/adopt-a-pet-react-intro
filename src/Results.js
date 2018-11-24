@@ -1,7 +1,7 @@
 import React from "react";
 import Pet from "./Pet";
 import pf from "petfinder-client";
-// import SearchBox from "./SearchBox";
+import SearchBox from "./SearchBox";
 
 const petfinder = pf({
     key: process.env.API_KEY,
@@ -22,15 +22,18 @@ class Results extends React.Component {
     }
 
     search = () => {
-        console.log(this.props.location);
+        console.log(this.props.petLocation);
+        console.log(this.props.animal);
+        console.log(this.props.breed);
         petfinder.pet
             .find({
                 output: "full",
-                location: this.props.location,
+                petLocation: this.props.petLocation,
                 animal: this.props.animal,
                 breed: this.props.breed
             })
             .then(data => {
+                console.log(data);
                 let pets;
 
                 if (data.petfinder.pets && data.petfinder.pets.pet) {
@@ -52,29 +55,29 @@ class Results extends React.Component {
     render() {
         const {
             animal,
-            location,
+            petLocation,
             breeds,
             breed,
             handleAnimalChange,
             handleBreedChange,
-            handleLocationChange
+            handlePetLocationChange
         } = this.props;
 
-        console.log(location);
+        console.log(petLocation);
 
         return (
             <div className="search">
-                {/* <SearchBox
+                <SearchBox
                     search={this.search}
                     path="/"
                     animal={animal}
-                    location={location}
+                    petLocation={petLocation}
                     breed={breed}
                     breeds={breeds}
                     handleAnimalChange={handleAnimalChange}
                     handleBreedChange={handleBreedChange}
-                    handleLocationChange={handleLocationChange}
-                /> */}
+                    handlePetLocationChange={handlePetLocationChange}
+                />
                 {this.state.pets.map(elem => {
                     let breed;
                     if (Array.isArray(elem.breeds.breed)) {
@@ -88,7 +91,7 @@ class Results extends React.Component {
                             name={elem.name}
                             breed={breed}
                             media={elem.media}
-                            location={`${elem.contact.city}, ${
+                            petLocation={`${elem.contact.city}, ${
                                 elem.contact.state
                             }`}
                             key={elem.id}
