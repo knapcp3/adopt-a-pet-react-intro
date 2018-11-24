@@ -10,15 +10,13 @@ class SearchBox extends React.Component {
     render() {
         const {
             animal,
-            location,
+            petLocation,
             breeds,
             breed,
             handleAnimalChange,
             handleBreedChange,
-            handleLocationChange
+            handlePetLocationChange
         } = this.props;
-
-        //console.log(location);
 
         return (
             <div className="search-params">
@@ -27,8 +25,8 @@ class SearchBox extends React.Component {
                         Location
                         <input
                             id="location"
-                            value={location}
-                            onChange={handleLocationChange}
+                            value={petLocation}
+                            onChange={handlePetLocationChange}
                             placeholder="Location"
                         />
                     </label>

@@ -3,7 +3,7 @@ import { Link } from "@reach/router";
 
 class Pet extends React.Component {
     render() {
-        const { name, animal, breed, media, location, id } = this.props;
+        const { name, animal, breed, media, petLocation, id } = this.props;
         let photos = [];
 
         if (media && media.photos && media.photos.photo) {
@@ -22,7 +22,7 @@ class Pet extends React.Component {
                 <div className="info">
                     <h1>{name}</h1>
                     <h2>
-                        {animal} - {breed} - {location}
+                        {animal} - {breed} - {petLocation}
                     </h2>
                 </div>
             </Link>

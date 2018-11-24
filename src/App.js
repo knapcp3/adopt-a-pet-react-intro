@@ -1,7 +1,7 @@
 import pf from "petfinder-client";
 import React from "react";
 import { render } from "react-dom";
-import Results from "./Results";
+import SearchResults from "./SearchResults";
 import { Router, Link } from "@reach/router";
 import Details from "./Details";
 import SearchParams from "./SearchParams";
@@ -31,6 +31,7 @@ class App extends React.Component {
         this.setState({
             petLocation: event.target.value
         });
+        console.log(this.state.petLocation);
     };
 
     handleAnimalChange = event => {
@@ -74,15 +75,6 @@ class App extends React.Component {
     }
 
     render() {
-        const {
-            animal,
-            petLocation,
-            breeds,
-            breed,
-            handleAnimalChange,
-            handleBreedChange,
-            handlePetLocationChange
-        } = this.state;
         return (
             <div>
                 <header>
@@ -93,18 +85,9 @@ class App extends React.Component {
                 </header>
 
                 <Router>
-                    <Results
-                        path="/"
-                        animal={animal}
-                        petLocation={petLocation}
-                        breed={breed}
-                        breeds={breeds}
-                        handleAnimalChange={handleAnimalChange}
-                        handleBreedChange={handleBreedChange}
-                        handlePetLocationChange={handlePetLocationChange}
-                    />
+                    <SearchResults path="/" {...this.state} />
                     <Details path="/details/:id" />
-                    <SearchParams path="/search-params" />
+                    <SearchParams path="/search-params" {...this.state} />
                 </Router>
             </div>
         );
